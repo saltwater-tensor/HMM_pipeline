@@ -1,12 +1,16 @@
 clear
 clear test
-load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\OFF\Whole_brain_stn_lfp_medication_OFF_06_Jan_2020_18_39_55_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\LifeTimes.mat')
-lifetimesoff = LifeTimes;
+% load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\OFF\Whole_brain_stn_lfp_medication_OFF_06_Jan_2020_18_39_55_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\LifeTimes.mat')
+% lifetimesoff = LifeTimes;
+% 
+% clearvars -except lifetimesoff
+% load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\ON\Whole_brain_stn_lfp_medication_ON_06_Jan_2020_18_45_18_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\LifeTimes.mat')
+% lifetimeson = LifeTimes;
 
-clearvars -except lifetimesoff
-load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\ON\Whole_brain_stn_lfp_medication_ON_06_Jan_2020_18_45_18_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\LifeTimes.mat')
-lifetimeson = LifeTimes;
+%% Path to temporal properties data
+load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis_2\OFF\LifeTimes_with_S032')
 
+load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis_2\ON\LifeTimes_with_S032')
 
 %% Error bar plot
 offstate = [1,2,3];
@@ -33,10 +37,11 @@ for j = 1:1:3
     
 end
 
-number = 2;
+number = 3;
 fig_handle = figure(1);
 hold on
 pl = subplot(1,3,number);
+pl.LineWidth = 1.5;
 pl.XLim = [0.5 2.5];
 max_val = max(M_off(number)+ err_off(number), M_on(number)+ err_on(number));
 max_val = ceil(max_val) + 1;
@@ -47,37 +52,39 @@ ytickval = linspace(min_val,max_val,numticks);
 pl.YTick = ceil(ytickval);
 pl.YLim = [min_val max_val];
 pl.XTick = [1, 2];
-pl.XTickLabel = {'off', 'on'};
-pl.LineWidth  = 2;
-pl.FontWeight = 'bold';
-pl.FontSize = 12;
+pl.XTickLabel = {'OFF', 'ON'};
+% pl.FontWeight = 'bold';
+pl.FontSize = 10;
 pl.TickLength = [0.03,0.025];
 hold on
 
-e1 = errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',8,...
-    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',2,'CapSize',10);
+e1 = errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',5,...
+    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',1.5,'CapSize',8);
 
-e2 = errorbar(2,M_on(number),err_on(number),'-s','MarkerSize',8,...
-    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',2,'CapSize',10);
+e2 = errorbar(2,M_on(number),err_on(number),'-s','MarkerSize',5,...
+    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',1.5,'CapSize',8);
 
 if number == 3
 a2 = axes();
 a2.Position = [0.782499 0.2647619 0.083571428571429 0.223398864132803];
 a2.XTick = [];
-errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',8,...
-    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',3,'CapSize',12);
+errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',5,...
+    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',1.5,'CapSize',8);
 end
 
 
 %% For testing fractional occupancy difference between state across subjects
 
-load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\OFF\Whole_brain_stn_lfp_medication_OFF_06_Jan_2020_18_39_55_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\FO.mat')
-offFO = FO;
-clear FO
-load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\ON\Whole_brain_stn_lfp_medication_ON_06_Jan_2020_18_45_18_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\FO.mat')
-onFO = FO;
-clear FO
+% load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\OFF\Whole_brain_stn_lfp_medication_OFF_06_Jan_2020_18_39_55_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\FO.mat')
+% offFO = FO;
+% clear FO
+% load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\ON\Whole_brain_stn_lfp_medication_ON_06_Jan_2020_18_45_18_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\FO.mat')
+% onFO = FO;
+% clear FO
 
+load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis_2\OFF\FO_with_S032')
+
+load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis_2\ON\FO_with_S032')
 
 
 M_off = mean(offFO);
@@ -101,10 +108,11 @@ err_on = err_on(:,[2,4,1]);
 % e2 = errorbar(m_on,err_on,'-s','MarkerSize',10,...
 %     'MarkerEdgeColor','green','MarkerFaceColor','green','LineWidth',4);
 
-number = 3;
+number = 1;
 fig_handle = figure(2);
 hold on
 pl = subplot(1,3,number);
+pl.LineWidth = 1.5;
 pl.XLim = [0.5 2.5];
 max_val = max(M_off(number)+ err_off(number), M_on(number)+ err_on(number));
 max_val = (max_val) + 0.01;
@@ -115,18 +123,17 @@ ytickval = linspace(min_val,max_val,numticks);
 pl.YTick = (ytickval);
 pl.YLim = [min_val max_val];
 pl.XTick = [1, 2];
-pl.XTickLabel = {'off', 'on'};
-pl.LineWidth  = 2;
-pl.FontWeight = 'bold';
-pl.FontSize = 12;
+pl.XTickLabel = {'OFF', 'ON'};
+% pl.FontWeight = 'bold';
+pl.FontSize = 10;
 pl.TickLength = [0.03,0.025];
 hold on
 
-e1 = errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',8,...
-    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',2,'CapSize',10);
+e1 = errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',5,...
+    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',1.5,'CapSize',8);
 
-e2 = errorbar(2,M_on(number),err_on(number),'-s','MarkerSize',8,...
-    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',2,'CapSize',10);
+e2 = errorbar(2,M_on(number),err_on(number),'-s','MarkerSize',5,...
+    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',1.5,'CapSize',8);
 
 % saveas(fig_handle,['error_plot_FO']);
 % saveas(fig_handle,['error_plot_FO'],'png');
@@ -134,14 +141,15 @@ e2 = errorbar(2,M_on(number),err_on(number),'-s','MarkerSize',8,...
 
 %% For testing intervals difference between state across subjects
 
-load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\OFF\Whole_brain_stn_lfp_medication_OFF_06_Jan_2020_18_39_55_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\Intervals.mat')
-intervalsoff = Intervals;
+% load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\OFF\Whole_brain_stn_lfp_medication_OFF_06_Jan_2020_18_39_55_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\Intervals.mat')
+% intervalsoff = Intervals;
+% 
+% load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\ON\Whole_brain_stn_lfp_medication_ON_06_Jan_2020_18_45_18_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\Intervals.mat')
+% intervalson = Intervals;
 
-load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\ON\Whole_brain_stn_lfp_medication_ON_06_Jan_2020_18_45_18_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\Intervals.mat')
-intervalson = Intervals;
+load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis_2\OFF\Intervals_with_S032')
 
-clear Intervals
-
+load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis_2\ON\Intervals_with_S032')
 
 % Error bar plot
 offstate = [1,2,3];
@@ -172,6 +180,7 @@ number = 3;
 fig_handle = figure(3);
 hold on
 pl = subplot(1,3,number);
+pl.LineWidth = 1.5;
 pl.XLim = [0.5 2.5];
 max_val = max(M_off(number)+ err_off(number), M_on(number)+ err_on(number));
 max_val = ceil(max_val) + 1;
@@ -182,25 +191,24 @@ ytickval = linspace(min_val,max_val,numticks);
 pl.YTick = ceil(ytickval);
 pl.YLim = [min_val max_val];
 pl.XTick = [1, 2];
-pl.XTickLabel = {'off', 'on'};
-pl.LineWidth  = 2;
-pl.FontWeight = 'bold';
-pl.FontSize = 12;
+pl.XTickLabel = {'OFF', 'ON'};
+% pl.FontWeight = 'bold';
+pl.FontSize = 10;
 pl.TickLength = [0.03,0.025];
 hold on
 
-e1 = errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',8,...
-    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',2,'CapSize',10);
+e1 = errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',5,...
+    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',1.5,'CapSize',8);
 
-e2 = errorbar(2,M_on(number),err_on(number),'-s','MarkerSize',8,...
-    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',2,'CapSize',10);
+e2 = errorbar(2,M_on(number),err_on(number),'-s','MarkerSize',5,...
+    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',1.5,'CapSize',8);
 
 if number == 1
 a2 = axes();
 a2.Position = [0.21642857142857 0.212380952380959 0.083571428571429 0.223398864132803];
 a2.XTick = [];
-errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',8,...
-    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',3,'CapSize',12);
+errorbar(1,M_off(number),err_off(number),'-s','MarkerSize',5,...
+    'MarkerEdgeColor','k','MarkerFaceColor','k','LineWidth',1.5,'CapSize',8);
 end
 % gca
 % ans.XLim = [0.5 6.5];
