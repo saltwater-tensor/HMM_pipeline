@@ -630,3 +630,13 @@ end
 h = heatmap(C_all,'Colormap',jet);
 h.XLabel = 'ON1'; %columns
 h.YLabel = 'ON2'; %rows ON
+
+ % Get state matches
+ 
+ % This results in columns corresponding to ON states and data entries as
+ % their corresponding OFF
+%  [assignment,cost] = munkres(C_all); 
+ 
+ % This results in columns corresponding to OFF states and data entries as
+ % their corresponding ON
+ [assignment,cost] = munkres(C_all');
