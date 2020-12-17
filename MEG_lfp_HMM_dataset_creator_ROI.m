@@ -15,8 +15,8 @@
 brainstorm nogui
 
 %% Local computer path names
-%   database ='D:\Abhinav_Sharma\RS_peri_MEGLFP\brainstorm_db\MEG_LFP_peri\';
-  database = 'Q:\RS_MEG_LFP_peri\brainstorm_db\RS_PD_peri\';
+  database ='D:\Abhinav_Sharma\RS_peri_MEGLFP\brainstorm_db\MEG_LFP_peri\';
+%   database = 'Q:\RS_MEG_LFP_peri\brainstorm_db\RS_PD_peri\';
 
 %% Subject type
 
