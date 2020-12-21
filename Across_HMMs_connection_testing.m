@@ -170,7 +170,7 @@ for factor_number = 1:1:3
                  mean_off_coh(offstate) = mean(OFF_coh);
                  err_off_coh(offstate) = std( OFF_coh ) / sqrt( length( OFF_coh ));
                  
-                
+                 
                  coh_off_raw_region{offstate,factor_number,region1,region2} = (OFF_coh);
                  
                  OFF_coh = [];

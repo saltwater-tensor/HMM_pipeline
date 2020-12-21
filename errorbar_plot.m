@@ -1,3 +1,6 @@
+%% This script contains code to generate temporal properties error bar plots
+
+
 clear
 clear test
 % load('C:\MEG_lfp_peri_analysis\hmm\Mindboggle_analysis\OFF\Whole_brain_stn_lfp_medication_OFF_06_Jan_2020_18_39_55_HMM_model_pca_NO_MAR_Motor_cortex_LFP_all_embed_lags\LifeTimes.mat')
@@ -37,7 +40,7 @@ for j = 1:1:3
     
 end
 
-number = 3;
+number = 1;
 fig_handle = figure(1);
 hold on
 pl = subplot(1,3,number);
@@ -50,7 +53,10 @@ min_val = floor(min_val) - 2;
 numticks = 4;
 ytickval = linspace(min_val,max_val,numticks);
 pl.YTick = ceil(ytickval);
-pl.YLim = [min_val max_val];
+
+% pl.YLim = [min_val max_val];
+pl.YLim = [155 175];
+
 pl.XTick = [1, 2];
 pl.XTickLabel = {'OFF', 'ON'};
 % pl.FontWeight = 'bold';
@@ -108,7 +114,7 @@ err_on = err_on(:,[2,4,1]);
 % e2 = errorbar(m_on,err_on,'-s','MarkerSize',10,...
 %     'MarkerEdgeColor','green','MarkerFaceColor','green','LineWidth',4);
 
-number = 1;
+number = 3;
 fig_handle = figure(2);
 hold on
 pl = subplot(1,3,number);
@@ -176,7 +182,7 @@ for j = 1:1:3
     
 end
 
-number = 3;
+number = 1;
 fig_handle = figure(3);
 hold on
 pl = subplot(1,3,number);
