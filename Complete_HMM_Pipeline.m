@@ -151,7 +151,7 @@ load(OPTIONS_NAME)
 
 
 %% Temporal aspects
-[vpath] = hmmdecode(data,T,HMM_model.hmm,1);
+[vpath] = HMM_model.vpath;
 save('viterbi_path','vpath');
 LifeTimes = getStateLifeTimes (HMM_model.vpath,T,options,5);
 save('LifeTimes','LifeTimes');
@@ -237,7 +237,7 @@ T = T';
 data = cell2mat(data);
 fitmt_group = hmmspectramt(data,T,HMM_model.Gamma,options_mt);
 clear data T
-save('fitmt_group_filtered13to30','fitmt_group','-v7.3')
+save('fitmt_group_filtered1to45','fitmt_group','-v7.3')
 
 %%
 %Subject specific spectra
@@ -260,7 +260,7 @@ for n=1:N
     fitmt_subj{n}.state = rmfield(fitmt_subj{n}.state,'phase');
     disp(['Subject ' num2str(n)])
 end
-save('fitmt_subj_filtered13to30','fitmt_subj' ,'-v7.3')
+save('fitmt_subj_filtered1to45','fitmt_subj' ,'-v7.3')
 
 
 %% STEP 6: NNMF BASED SPECTRAL ANALYSIS
