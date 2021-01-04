@@ -93,13 +93,7 @@ for factor_number = 1:1:3
                  
                  ON_coh = [];
             end
-        
-      % Total number of connections between the two regions being tested
-      % We can correct the p-value by this number.
-       RR2 = regions{region2};
-       RR1 = regions{region1};
-       total_possible_connections = nchoosek((length(RR1)),1) * nchoosek((length(RR2)),1);
-            
+                    
             
         % Now we have collected the the coherence values for this pair
         % of regions across all subjects
@@ -118,9 +112,6 @@ for factor_number = 1:1:3
       test_lesser(1,factor_number,region1,region2) = p_off_lesser_hghpwr;
       test_greater(1,factor_number,region1,region2) = p_off_greater_hghpwr;
       
-      test_lesser_corrected(1,factor_number,region1,region2) = p_off_lesser_hghpwr/total_possible_connections;
-      test_greater_corrected(1,factor_number,region1,region2) = p_off_greater_hghpwr/total_possible_connections;
-      
       off_comp_comms = coh_off_raw_region{2,factor_number,region1,region2};
       on_comp_comms = coh_on_raw_region{4,factor_number,region1,region2};
       
@@ -130,9 +121,6 @@ for factor_number = 1:1:3
       test_lesser(2,factor_number,region1,region2) = p_off_lesser_comms;
       test_greater(2,factor_number,region1,region2) = p_off_greater_comms;
       
-      test_lesser_corrected(2,factor_number,region1,region2) = p_off_lesser_comms/total_possible_connections;
-      test_greater_corrected(2,factor_number,region1,region2) =p_off_greater_comms/total_possible_connections;
-      
       off_comp_local = coh_off_raw_region{3,factor_number,region1,region2};
       on_comp_local = coh_on_raw_region{1,factor_number,region1,region2};
       
@@ -141,10 +129,6 @@ for factor_number = 1:1:3
       
       test_lesser(3,factor_number,region1,region2) = p_off_lesser_local;
       test_greater(3,factor_number,region1,region2) = p_off_greater_local;
-      
-      test_lesser_corrected(3,factor_number,region1,region2) = p_off_lesser_local/total_possible_connections;
-      test_greater_corrected(3,factor_number,region1,region2) = p_off_greater_local/total_possible_connections;
-      
       
         end
     end
@@ -161,7 +145,7 @@ p_thresh = 0.01;
 F = figure(1);
 D = squeeze(test_greater(1,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -179,7 +163,7 @@ clear F
 F =figure(2)
 D = squeeze(test_greater(2,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -197,7 +181,7 @@ clear F
 F =figure(3)
 D = squeeze(test_greater(3,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -216,7 +200,7 @@ clear F
 F =figure(4)
 D = squeeze(test_greater(1,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -234,7 +218,7 @@ clear F
 F =figure(5)
 D = squeeze(test_greater(2,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -252,7 +236,7 @@ clear F
 F =figure(6)
 D = squeeze(test_greater(3,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -271,7 +255,7 @@ clear F
 F =figure(7)
 D = squeeze(test_greater(1,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -289,7 +273,7 @@ clear F
 F =figure(8)
 D = squeeze(test_greater(2,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -307,7 +291,7 @@ clear F
 F =figure(9)
 D = squeeze(test_greater(3,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%SD(find(D > p_thresh)) = NaN;
+D(find(D > p_thresh)) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -322,11 +306,25 @@ clear F
 
 %% Figures corrected
 p_thresh = 0.01;
+
+for region1 = 1:1:7
+    for region2 = 1:1:7
+        
+       RR2 = regions{region2};
+       RR1 = regions{region1};
+       total_possible_connections = nchoosek((length(RR1)),1) * nchoosek((length(RR2)),1);
+       p_thresh_map(region1,region2) = p_thresh/total_possible_connections;
+        
+    end
+end
+
+
 % Beta band
 F = figure(1);
-D = squeeze(test_greater_corrected(1,3,:,:));
+D = squeeze(test_greater(1,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -342,9 +340,10 @@ clear F
 
 
 F =figure(2)
-D = squeeze(test_greater_corrected(2,3,:,:));
+D = squeeze(test_greater(2,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -360,9 +359,10 @@ clear F
 
 
 F =figure(3)
-D = squeeze(test_greater_corrected(3,3,:,:));
+D = squeeze(test_greater(3,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -379,9 +379,10 @@ clear F
 
 % Alpha Band
 F =figure(4)
-D = squeeze(test_greater_corrected(1,2,:,:));
+D = squeeze(test_greater(1,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -397,9 +398,10 @@ clear F
 
 
 F =figure(5)
-D = squeeze(test_greater_corrected(2,2,:,:));
+D = squeeze(test_greater(2,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -415,9 +417,10 @@ clear F
 
 
 F =figure(6)
-D = squeeze(test_greater_corrected(3,2,:,:));
+D = squeeze(test_greater(3,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -434,9 +437,10 @@ clear F
 
 % Delta/theta Band
 F =figure(7)
-D = squeeze(test_greater_corrected(1,1,:,:));
+D = squeeze(test_greater(1,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -452,9 +456,10 @@ clear F
 
 
 F =figure(8)
-D = squeeze(test_greater_corrected(2,1,:,:));
+D = squeeze(test_greater(2,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
@@ -470,9 +475,10 @@ clear F
 
 
 F =figure(9)
-D = squeeze(test_greater_corrected(3,1,:,:));
+D = squeeze(test_greater(3,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%SD(find(D > p_thresh)) = NaN;
+% D(find(D > p_thresh)) = NaN;
+D(D > p_thresh_map) = NaN;
 h = heatmap(D);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
