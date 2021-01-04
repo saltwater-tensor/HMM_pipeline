@@ -244,54 +244,99 @@ end
 save('fitmt_subj_filtered1to45','fitmt_subj' ,'-v7.3')
 
 %% Four band analysis
-% options_fact = struct();
-% options_fact.Ncomp = 4; 
-% options_fact.Base = 'coh';
-% % We choose to do it in the assymetric way for nnmf factor calculation
-% % Also we wont do the robust automated fitting because we want to see what 
-% % types of factors do we get 
-% 
-% % SUBSTEP 1: Get back the matrix created by combining all individual subject
-% % level multitaper results
-% % No NNMF is performed here
-% chan = [];
-% chan1 = [1:6] ;%for stn contacts
-% chan2 = [7:48];%the remaining cortical locations
+options_fact = struct();
+options_fact.Ncomp = 4; 
+options_fact.Base = 'coh';
+% We choose to do it in the assymetric way for nnmf factor calculation
+% Also we wont do the robust automated fitting because we want to see what 
+% types of factors do we get 
+
+% SUBSTEP 1: Get back the matrix created by combining all individual subject
+% level multitaper results
+% No NNMF is performed here
+chan = [];
+chan1 = [1:6] ;%for stn contacts
+chan2 = [7:48];%the remaining cortical locations
 
 %% 
 
 %Load the subject level dataset
-% load('fitmt_subj_filtered1to45')
-% supply_profiles = [];
-% [X] = ...
-%     spectdecompose_custom_updated(fitmt_subj,options_fact,chan,chan1,chan2,supply_profiles);
-% % save('matrix_to_factor_filtered1to45','X','-v7.3')
-% 
-% %% NNMF with plot, % Perform decomposition here
-% % Once you are satisfied with the profiles you will proceed to substep 2
-% figure(9022)
+load('fitmt_subj_filtered1to45')
+supply_profiles = [];
+[X] = ...
+    spectdecompose_custom_updated(fitmt_subj,options_fact,chan,chan1,chan2,supply_profiles);
+% save('matrix_to_factor_filtered1to45','X','-v7.3')
+
+%% NNMF with plot, % Perform decomposition here
+% Once you are satisfied with the profiles you will proceed to substep 2
+load('matrix_to_factor_filtered1to45')
+figure(9026)
 % [supply_profiles,H] = nnmf(X,4,'algorithm','als');
 % 
 % %%
-% load('fitmt_group_filtered1to45')
-% 
-% subplot1 = @(m,n,p) subtightplot (m, n, p, [0.04 0.5], [0.01 0.03], [0.02 0.02]);
-% for pl = 1:1:size(supply_profiles,2)
-%    subplot1(size(supply_profiles,2),1,pl)
-%    plot(fitmt_group.state(1).f,supply_profiles(:,pl),'Linewidth',3)
-% end
-% 
-% Hz = fitmt_group.state(1).f;
+load('fitmt_group_filtered1to45')
+
+subplot1 = @(m,n,p) subtightplot (m, n, p, [0.04 0.5], [0.01 0.03], [0.02 0.02]);
+for pl = 1:1:size(supply_profiles,2)
+   subplot1(size(supply_profiles,2),1,pl)
+   plot(fitmt_group.state(1).f,supply_profiles(:,pl),'Linewidth',3)
+end
+
+Hz = fitmt_group.state(1).f;
 % 
 % %%
 % savestep = input('Enter row numbers as vector of the supply profiles that you wish to save as factors, REMOVE NOISE FACTOR');
 % supply_profiles = supply_profiles(:,savestep);
 % save('supply_profiles_factors','supply_profiles')
 % 
-% %% SUBSTEP 2: Now project the data on a group level and subject level
+ %% SUBSTEP 2: Now project the data on a group level and subject level
 % % calculated using the factors calculated at a group level above
-% load('fitmt_subj_filtered1to45')
-% [X,fitmt_subj_fact_4b,fitmt_group_fact_4b,sp_profiles_4b] = ...
-%     spectdecompose_custom_updated(fitmt_subj,options_fact,chan,chan1,chan2,supply_profiles);
+load('fitmt_subj_filtered1to45')
+[X,fitmt_subj_fact_4b,fitmt_group_fact_4b,sp_profiles_4b] = ...
+    spectdecompose_custom_updated(fitmt_subj,options_fact,chan,chan1,chan2,supply_profiles);
 
+
+%% -------------------------------- VISUALISATION -------------------------%%
+
+% Run it from a folder where the figures are meant to be saved
+load('fitmt_group_fact_4b_supply_profiles_1_factors')
+RELabel
+
+
+
+%% Distance between different states of different HMMs
+
+for c = 1:1:size(C_all_covs_original,3)
+    
+    C1 = C_all_covs_original(:,:,c);
+    
+    for c1 = 1:1:size(C_all_covs_shuffle,3)
+        C2 = C_all_covs_shuffle(:,:,c1);
+        E = eig(C1*C2);
+          E1 = eig(C1,C2);
+          logE = log(E);
+          logE1 = log(E1);
+          sqr = logE1 .* logE1;
+          sumsqr = sum(sqr);
+          sqrtsumsqr = sqrt(sumsqr);
+          abssq = abs(sqrtsumsqr);
+          dist1 = abssq;
+%           dist = sqrt(sum(log
+          C_all(c,c1) = dist1;
+    end
+end
+
+h = heatmap(C_all,'Colormap',jet);
+h.XLabel = 'Original ON'; %columns
+h.YLabel = 'Shuffle ON'; %rows ON
+
+ % Get state matches
+ 
+ % This results in columns corresponding to ON states and data entries as
+ % their corresponding OFF
+%  [assignment,cost] = munkres(C_all); 
+ 
+ % This results in columns corresponding to OFF states and data entries as
+ % their corresponding ON
+%  [assignment,cost] = munkres(C_all');
 
