@@ -276,7 +276,7 @@ save('fitmt_subj_filtered1to45','fitmt_subj' ,'-v7.3')
 
 %% Four band analysis
 options_fact = struct();
-options_fact.Ncomp = 4; 
+options_fact.Ncomp = 3; 
 options_fact.Base = 'coh';
 % We choose to do it in the assymetric way for nnmf factor calculation
 % Also we wont do the robust automated fitting because we want to see what 

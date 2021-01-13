@@ -345,7 +345,7 @@ end
    
 
 %% SUBJECT LEVEL
-if N>1
+if N>=1
     for n = 1:N
          %% CREATE MATRICES FOR FACTORISATION
         % put coh and psd in temporary arrays
