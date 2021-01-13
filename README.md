@@ -16,6 +16,8 @@ Run the script Complete_HMM_Pipeline.m
 
 #### Ring figures
 
+Figure 1 can be plotted as a regular Matlab figure using the variable supply_profiles 
+
 Use the script  ReLabel.m for part A and C of the figures
 
 Use the script Across_HMMs_connection_testing.m for part B of the figures.
