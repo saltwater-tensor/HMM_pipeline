@@ -5,7 +5,9 @@ This repository contains all the upto date code for different types of HMM analy
 
 ## eLife pipeline
 In order to run HMM all the neccessary code is present in the repository.
+
 Clone a local copy of https://github.com/OHBA-analysis/HMM-MAR
+
 Clone a local copy of this repository.
 
 Run the script Complete_HMM_Pipeline.m
@@ -14,7 +16,15 @@ Run the script Complete_HMM_Pipeline.m
 
 #### Ring figures
 
-Use the script: ReLabel.m
+Use the script  ReLabel.m for part A and C of the figures
+
+Use the script Across_HMMs_connection_testing.m for part B of the figures.
+
+
+#### Temporal properties
+
+Use the script errorbar_plot.m
+
 
 
 
