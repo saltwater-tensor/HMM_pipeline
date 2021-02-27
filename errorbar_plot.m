@@ -114,7 +114,7 @@ err_on = err_on(:,[2,4,1]);
 % e2 = errorbar(m_on,err_on,'-s','MarkerSize',10,...
 %     'MarkerEdgeColor','green','MarkerFaceColor','green','LineWidth',4);
 
-number = 3;
+number = 2;
 fig_handle = figure(2);
 hold on
 pl = subplot(1,3,number);
@@ -223,3 +223,145 @@ end
 % saveas(fig_handle,['error_plot_LifeTimes'],'png');
 % close(fig_handle)
 
+
+%% Repeated measures ANOVA with multiple comparison
+
+%% Fractional occupancy test
+FO_comb(:,1) = [offFO(:,1);onFO(:,2)];
+FO_comb(:,2) = [offFO(:,2);onFO(:,4)];
+FO_comb(:,3) = [offFO(:,3);onFO(:,1)];
+
+t = table(Treatment,FO_comb(:,1),FO_comb(:,2),FO_comb(:,3),...
+'VariableNames',{'Treatment','hyperda','comms','local'});
+
+Meas = table([1 2 3]','VariableNames',{'States'});
+
+rm = fitrm(t,'hyperda-local~Treatment','WithinDesign',Meas);
+ranovatbl = ranova(rm);
+States_OFFvsON = multcompare(rm, 'Treatment', 'By', 'States');
+Treatment_StatevsState = multcompare(rm, 'States', 'By', 'Treatment');
+
+%% Intervals
+intervalsoff = cellfun(@transpose,intervalsoff,'UniformOutput',false);
+intervalson = cellfun(@transpose,intervalson,'UniformOutput',false);
+
+% hyper-da
+hyperda_off = cell2mat(intervalsoff(1:17,1));
+treatment_hyperda_off = cell((length(hyperda_off)),1);
+treatment_hyperda_off(:) ={'off'};
+
+hyperda_on = cell2mat(intervalson(1:17,2));
+treatment_hyperda_on = cell((length(hyperda_on)),1);
+treatment_hyperda_on(:) ={'on'};
+
+hyperda = [hyperda_off;hyperda_on];
+states_hyperda = cell((length(hyperda_off)+length(hyperda_on)),1);
+states_hyperda(:) = {'hyperda'};
+treatment_hyperda = [treatment_hyperda_off;treatment_hyperda_on];
+
+% comms
+comms_off = cell2mat(intervalsoff(1:17,2));
+treatment_comms_off = cell((length(comms_off)),1);
+treatment_comms_off(:) ={'off'};
+
+comms_on = cell2mat(intervalson(1:17,4));
+treatment_comms_on = cell((length(comms_on)),1);
+treatment_comms_on(:) ={'on'};
+
+comms = [comms_off;comms_on];
+states_comms = cell((length(comms_off)+length(comms_on)),1);
+states_comms(:) = {'comms'};
+treatment_comms = [treatment_comms_off;treatment_comms_on];
+
+% local
+local_off = cell2mat(intervalsoff(1:17,3));
+treatment_local_off = cell((length(local_off)),1);
+treatment_local_off(:) ={'off'};
+
+local_on = cell2mat(intervalson(1:17,1));
+treatment_local_on = cell((length(local_on)),1);
+treatment_local_on(:) ={'on'};
+
+local = [local_off;local_on];
+states_local = cell((length(local_off)+length(local_on)),1);
+states_local(:) = {'local'};
+treatment_local = [treatment_local_off;treatment_local_on];
+
+y = [hyperda;comms;local];
+y_states = [states_hyperda;states_comms;states_local];
+y_treatment = [treatment_hyperda;treatment_comms;treatment_local];
+
+% Testing
+clearvars -except y y_states y_treatment
+
+[p,tbl,stats,terms] = anovan(y,{y_states y_treatment},'model','full','varnames',{'States','Treatment'});
+
+results_all = multcompare(stats,'Dimension',[1 2]);
+
+results_states = multcompare(stats,'Dimension',[1]);
+
+results_medication = multcompare(stats,'Dimension',[2]);
+
+%% Lifetimes
+lifetimesoff = cellfun(@transpose,lifetimesoff,'UniformOutput',false);
+lifetimeson = cellfun(@transpose,lifetimeson,'UniformOutput',false);
+
+% hyper-da
+hyperda_off = cell2mat(lifetimesoff(1:17,1));
+treatment_hyperda_off = cell((length(hyperda_off)),1);
+treatment_hyperda_off(:) ={'off'};
+
+hyperda_on = cell2mat(lifetimeson(1:17,2));
+treatment_hyperda_on = cell((length(hyperda_on)),1);
+treatment_hyperda_on(:) ={'on'};
+
+hyperda = [hyperda_off;hyperda_on];
+states_hyperda = cell((length(hyperda_off)+length(hyperda_on)),1);
+states_hyperda(:) = {'hyperda'};
+treatment_hyperda = [treatment_hyperda_off;treatment_hyperda_on];
+
+% comms
+comms_off = cell2mat(lifetimesoff(1:17,2));
+treatment_comms_off = cell((length(comms_off)),1);
+treatment_comms_off(:) ={'off'};
+
+comms_on = cell2mat(lifetimeson(1:17,4));
+treatment_comms_on = cell((length(comms_on)),1);
+treatment_comms_on(:) ={'on'};
+
+comms = [comms_off;comms_on];
+states_comms = cell((length(comms_off)+length(comms_on)),1);
+states_comms(:) = {'comms'};
+treatment_comms = [treatment_comms_off;treatment_comms_on];
+
+% local
+local_off = cell2mat(lifetimesoff(1:17,3));
+treatment_local_off = cell((length(local_off)),1);
+treatment_local_off(:) ={'off'};
+
+local_on = cell2mat(lifetimeson(1:17,1));
+treatment_local_on = cell((length(local_on)),1);
+treatment_local_on(:) ={'on'};
+
+local = [local_off;local_on];
+states_local = cell((length(local_off)+length(local_on)),1);
+states_local(:) = {'local'};
+treatment_local = [treatment_local_off;treatment_local_on];
+
+y = [hyperda;comms;local];
+y_states = [states_hyperda;states_comms;states_local];
+y_treatment = [treatment_hyperda;treatment_comms;treatment_local];
+
+% Testing
+clearvars -except y y_states y_treatment
+
+[p,tbl,stats,terms] = anovan(y,{y_states y_treatment},'model','full','varnames',{'States','Treatment'});
+
+figure(2)
+results_all = multcompare(stats,'Dimension',[1 2]);
+
+figure(3)
+results_states = multcompare(stats,'Dimension',[1]);
+
+figure(4)
+results_medication = multcompare(stats,'Dimension',[2]);
