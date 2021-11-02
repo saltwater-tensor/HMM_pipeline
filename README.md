@@ -28,7 +28,7 @@ Use the script Across_HMMs_connection_testing.m for part B of the figures.
 Use the script errorbar_plot.m
 
 
-## For any missing code or errors please raise an issue or email at abhirti1114@gmail.com
+## For any missing code or errors please raise an issue
 
 
 
