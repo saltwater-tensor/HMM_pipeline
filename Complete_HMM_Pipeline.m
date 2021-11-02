@@ -69,7 +69,7 @@ pca_done = 1;
 run_mar = 0;
 
 sign_flag = 1;
-states = input('Enter the number of states');
+states = 6; %input('Enter the number of states');
 options.K = states ;%input('enter desired num of states');
 options.Fs = sampling_freq; %input('enter sampling freq in Hz');
 if run_mar
@@ -109,20 +109,21 @@ options.initcyc = 100;
 options.repetitions = 1;
 options.updateGamma = 1;
 options.decodeGamma = 1;
-options.useParallel = 0;
+options.useParallel = 1;
 % options.DirStats = OutputPath;
 
 options.embeddedlags = -7:7; %[-10 8 6 4 2 0 2 4 6 8 10];
 options.embedd_lag_tags = 'embed_lags';
 % Stochastic gradient paramters
-options.BIGNbatch = 8; 
-options.BIGNinitbatch = options.BIGNbatch ; options.BIGtol = 1e-7; options.BIGcyc = 100; % or 
-options.BIGundertol_tostop = 5; options.BIGdelay = 1; 
-options.BIGforgetrate = 0.7; options.BIGbase_weights = 0.9;
+options.BIGNbatch = 4; 
+options.BIGNinitbatch = options.BIGNbatch ; options.BIGtol = 1e-7; options.BIGcyc = 1000; % or 
+options.BIGundertol_tostop = 50; options.BIGdelay = 1; 
+options.BIGforgetrate = 0.9; options.BIGbase_weights = 1;
 
 
 % warm start
-options.hmm = HMM_model.hmm;
+% options.hmm = HMM_model.hmm;
+% clear HMM_model
 dataset_name = ['Whole_brain_lfp_stn_medication' med_state];
 run_hmm_pipeline(dataset_name,data,T,num_pcs,sampling_freq,options)
 save('dataset_name','dataset_name');
@@ -206,7 +207,7 @@ load('MODEL_NAME')
 %%
 
 
-load('sampling_freq')
+% load('sampling_freq')
 options_mt = struct('Fs',sampling_freq); % Sampling rate - for the 25subj it is 300
 options_mt.fpass = [1 45];  % band of frequency you're interested in
 options_mt.tapers = [4 7]; % taper specification - leave it with default values
@@ -241,8 +242,8 @@ save('fitmt_group_filtered1to45','fitmt_group','-v7.3')
 
 %%
 %Subject specific spectra
-load('T')
-load('dataset_sign_flip_corrected')
+% load('T')
+% load('dataset_sign_flip_corrected')
 N = size(data,1);
 % per subject
 fitmt_subj = cell(N,1);
@@ -297,6 +298,7 @@ save('matrix_to_factor_filtered1to45','X','-v7.3')
 
 %% NNMF with plot, % Perform decomposition here
 % Once you are satisfied with the profiles you will proceed to substep 2
+clear supply_profiles
 figure(9022)
 [supply_profiles,H] = nnmf(X,4,'algorithm','als');
 subplot1 = @(m,n,p) subtightplot (m, n, p, [0.04 0.5], [0.01 0.03], [0.02 0.02]);
@@ -628,8 +630,8 @@ for c = 1:1:size(C_all_covs_ON,3)
 end
 
 h = heatmap(C_all,'Colormap',jet);
-h.XLabel = 'ON1'; %columns
-h.YLabel = 'ON2'; %rows ON
+h.XLabel = 'OFF 14 Jan'; %columns
+h.YLabel = 'ON 11 Mar'; %rows ON
 
  % Get state matches
  
@@ -639,4 +641,4 @@ h.YLabel = 'ON2'; %rows ON
  
  % This results in columns corresponding to OFF states and data entries as
  % their corresponding ON
- [assignment,cost] = munkres(C_all');
+%  [assignment,cost] = munkres(C_all');

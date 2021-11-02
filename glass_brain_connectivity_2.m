@@ -85,9 +85,9 @@ colr_mat_2_orig = colr_mat_2;
 
 %% RING PLOTS
 % Selecting significant connections
-%  Uncorrected test
 P_VALUE = input('enter your desired p-value for testing');
-
+open view_surface_matrix
+waitfor(msgbox('In the view_surface_matrix function manually set SurfAlpha to 0.7 and save'));
 K = 6;
 ndim = 48;
 total_band_num = 3;
@@ -107,10 +107,6 @@ if total_band_num == 1
         M_psd = M_psd + squeeze(abs(fitmt_group_fact.state(k).psd(1,:,:))) / K;        
     end
 end 
-
-% if (total_band_num ~= (size(fitmt_group_fact.state(1).coh,1) - 1))
-%     error('The number of bands and the fitmt group loaded does not match')
-% end
 
 for k = 1:1:K
         
@@ -147,13 +143,9 @@ for k = 1:1:K
         % Subtracting the mean PSD calculated across states or within
         % states for the psd values for the current state and the band
         psd_amp_centered = diag(squeeze(fitmt_group_fact.state(k).psd(band,:,:))) - diag(M_psd);
-%         schemaball_size = 100*psd_amp_centered;
         schemaball_size = 20*ones(48,1);
         [r_schm,c_schm] = find(schemaball_size <= 0);
         colr_mat_2_schm = colr_mat_2_orig;
-%         colr_mat_2_schm(r_schm,:) = repmat([0 0 0],length(find(schemaball_size <= 0)),1);
-%         schemaball_size(schemaball_size <= 0) = 30;
-%         schemaball_size(schemaball_size<10) = 30;
         
         % Coherence values for connectivity plot
         graph = coherence_value;        
@@ -187,7 +179,6 @@ for k = 1:1:K
             graph_ggm = teh_graph_gmm_fit(S2); 
             th = graph_ggm.normalised_th;
             graph = graph_ggm.data';
-%             graph = abs(graph);
             graph(graph<th) = NaN;
             graphmat = zeros(ndim, ndim);
             graphmat(inds2) = graph;
@@ -203,56 +194,21 @@ for k = 1:1:K
         end
             graph(isnan(graph)) = 0;
             graph_schemaball = graph;
-%             graph_schemaball = abs(graph);
             graph_schemaball = normalize(graph_schemaball,1,'range',[0 1]);
             graph = tril(graph);
-            % Rearranging graph for region based clustering
-         if ndim == 48
+            
+            
+        if ndim == 48
+            
             graph2 = graph + graph';
             graph2 = graph2(re_ROIs_48_index_complete,re_ROIs_48_index_complete);
             graph2 = tril(graph2);
             graph_schemaball = normalize(graph2,1,'range',[0 1]);
-%             C = figure((k*100 + band));
-%             set(gcf,'NumberTitle','off') %don't show the figure number
-%             set(gcf,'Name',['State ' num2str(k) ' band ' num2str(band)]) %select the name you want
-%             circularGraph((graph),'Label',myLabel_2,'ColorMap',colr_mat_2);
-            myLabel_2_schemaball = myLabel_2(:,1);
-            
-            %Numbering based labels
-            for LBL = 1:1:24
-                myLabel_2_schemaball{LBL,1} = [num2str(LBL) 'R'];
-            end
-            llb = 24;
-            for LBL = 25:1:48
-                myLabel_2_schemaball{LBL,1} = [num2str(llb) 'L'];
-                llb = llb -1;
-            end
-            
-%             savefig(C,[ Band_tag '_State ' num2str(k) ' band ' num2str(band)])
-%             saveas(C,[Band_tag '_State ' num2str(k) ' band ' num2str(band)],'png');
-%             close(C)
-%             clear C
-            C = figure((k*100 + band));
-            set(gcf,'NumberTitle','off') %don't show the figure number
-            set(gcf,'Name',['State ' num2str(k) ' band ' num2str(band)]) %select the name you want
-            schemaball(graph_schemaball,myLabel_2_schemaball,[],colr_mat_2_schm,schemaball_size,colr_mat_2_orig,...
-                ['State ' num2str(k) ' band ' num2str(band)]);
-            clear graph graphmat th grap_ggm
-%             close(C)
-%             clear C
-        elseif ndim == 42
-            indices_gr = re_ROIs_48_index - 6;
-            graph = graph(indices_gr,indices_gr);
-            C = figure((k*100 + band));
-            set(gcf,'NumberTitle','off') %don't show the figure number
-            set(gcf,'Name',['State ' num2str(k) ' band ' num2str(band)]) %select the name you want
-            circularGraph(graph,'Label',myLabel_3,'ColorMap',colr_mat_2(7:48,:));
-            savefig(C,[Band_tag '_State ' num2str(k) ' band ' num2str(band)])
-            saveas(C,[Band_tag '_State ' num2str(k) ' band ' num2str(band)],'png');
-            clear graph graphmat th grap_ggm 
-            close(C)
-            clear C
+
         end
+            
+            
+            glass_brain_connectivity
             
 
   end

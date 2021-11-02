@@ -74,7 +74,7 @@ sign_flag = 1;
 
 %% Hmm options
 if isempty(options)
-    
+    options.hmm = HMM_model.hmm;
     options.K = K_states ;%input('enter desired num of states');
     options.Fs = sampling_freq; %input('enter sampling freq in Hz');
     if run_mar
@@ -124,6 +124,7 @@ if isempty(options)
     options.BIGNinitbatch = options.BIGNbatch ; options.BIGtol = 1e-7; options.BIGcyc = 100; % or 
     options.BIGundertol_tostop = 5; options.BIGdelay = 1; 
     options.BIGforgetrate = 0.7; options.BIGbase_weights = 0.9;
+    
     
     
 end

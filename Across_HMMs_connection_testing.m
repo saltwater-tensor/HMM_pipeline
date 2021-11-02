@@ -248,21 +248,23 @@ end
 % All greater tests are plotted
 
 
-p_thresh = 0.01;
+p_thresh = 0.05;
 % Beta band
 F = figure(1);
 D = squeeze(test_greater(1,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'High Power beta band p OFFgreaterON';
 h.Title = 'High Power beta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -271,34 +273,37 @@ clear F
 F =figure(2)
 D = squeeze(test_greater(2,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str ='Comms beta band p OFFgreaterON';
 h.Title = 'Comms beta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
-
 
 
 F =figure(3)
 D = squeeze(test_greater(3,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str ='Local beta band p OFFgreaterON';
 h.Title = 'Local beta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -308,16 +313,18 @@ clear F
 F =figure(4)
 D = squeeze(test_greater(1,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str ='High Power alpha band p OFFgreaterON';
 h.Title = 'High Power alpha band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -326,16 +333,18 @@ clear F
 F =figure(5)
 D = squeeze(test_greater(2,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'Comms alpha band p OFFgreaterON';
 h.Title = 'Comms alpha band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -344,16 +353,18 @@ clear F
 F =figure(6)
 D = squeeze(test_greater(3,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'Local alpha band p OFFgreaterON';
 h.Title = 'Local alpha band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -363,34 +374,37 @@ clear F
 F =figure(7)
 D = squeeze(test_greater(1,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'High Power deltatheta band p OFFgreaterON';
 h.Title = 'High Power delta/theta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
-
 
 
 F =figure(8)
 D = squeeze(test_greater(2,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'Comms deltatheta band p OFFgreaterON';
 h.Title = 'Comms deltatheta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -399,16 +413,18 @@ clear F
 F =figure(9)
 D = squeeze(test_greater(3,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%SD(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'Local deltatheta band p OFFgreaterON';
 h.Title = 'Local delta/theta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -418,21 +434,23 @@ clear F
 % All lesser tests are plotted 
 
 
-p_thresh = 0.01;
+p_thresh = 0.05;
 % Beta band
 F = figure(1);
 D = squeeze(test_lesser(1,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'High Power beta band p OFFlesserON';
 h.Title = 'High Power beta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -441,16 +459,18 @@ clear F
 F =figure(2)
 D = squeeze(test_lesser(2,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str ='Comms beta band p OFFlesserON';
 h.Title = 'Comms beta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -459,16 +479,18 @@ clear F
 F =figure(3)
 D = squeeze(test_lesser(3,3,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str ='Local beta band p OFFlesserON';
 h.Title = 'Local beta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -478,16 +500,18 @@ clear F
 F =figure(4)
 D = squeeze(test_lesser(1,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str ='High Power alpha band p OFFlesserON';
 h.Title = 'High Power alpha band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -496,16 +520,18 @@ clear F
 F =figure(5)
 D = squeeze(test_lesser(2,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'Comms alpha band p OFFlesserON';
 h.Title = 'Comms alpha band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -514,16 +540,18 @@ clear F
 F =figure(6)
 D = squeeze(test_lesser(3,2,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'Local alpha band p OFFlesserON';
 h.Title = 'Local alpha band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -533,16 +561,18 @@ clear F
 F =figure(7)
 D = squeeze(test_lesser(1,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'High Power deltatheta band p OFFlesserON';
 h.Title = 'High Power delta/theta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -551,16 +581,18 @@ clear F
 F =figure(8)
 D = squeeze(test_lesser(2,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%D(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'Comms deltatheta band p OFFlesserON';
 h.Title = 'Comms deltatheta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
@@ -569,16 +601,18 @@ clear F
 F =figure(9)
 D = squeeze(test_lesser(3,1,:,:));
 D = reshape(mafdr(D(:),'BHFDR',true),[7,7]);
-%SD(find(D > p_thresh)) = NaN;
-h = heatmap(D);
+D(find(D > p_thresh)) = NaN;
+h = heatmap(D,'Colormap',white);
 h.XLabel = 'Regions'; %columns
 h.YLabel = 'Regions'; %rows
 title_str = 'Local deltatheta band p OFFlesserON';
 h.Title = 'Local delta/theta band p OFF > ON';
 h.XDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
 h.YDisplayLabels = {'contacts','frontal','medial PFC','temporal','sensory motor','parietal','visual'};
+set(gcf, 'Position',  [-858 236 380 300])
 saveas(F,title_str);
 saveas(F,title_str,'png');
+saveas(F,title_str,'svg');
 close(F)
 clear F
 
